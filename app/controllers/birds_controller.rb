@@ -9,7 +9,7 @@ class BirdsController < ApplicationController
 
   # POST /birds
   def create
-    bird = Bird.create(bird_params)
+    bird = Bird.create!(bird_params)
     render json: bird, status: :created
   end
 
@@ -22,7 +22,8 @@ class BirdsController < ApplicationController
   # PATCH /birds/:id
   def update
     bird = find_bird
-    bird.update(bird_params)
+    # update! exceptions will be handled by the rescue_from ActiveRecord::RecordInvalid code
+    bird.update!(bird_params)
     render json: bird
   end
 
@@ -46,5 +47,5 @@ class BirdsController < ApplicationController
   def render_not_found_response
     render json: { error: "Bird not found" }, status: :not_found
   end
-
 end
+
